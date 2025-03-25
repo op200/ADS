@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeMount, h } from 'vue';
+import { ref, watch, onBeforeMount, h, provide } from 'vue';
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { NConfigProvider, lightTheme, darkTheme, zhCN, dateZhCN } from 'naive-ui';
 import { NButton, NSpace, NCard, NTabPane, NTabs, NLayout, NLayoutSider, NMenu, type MenuOption } from 'naive-ui';
@@ -68,6 +68,8 @@ const menuOptions: MenuOption[] = [
     icon: () => h(Scales24Regular),
   },
 ];
+
+provide('currentTheme', currentTheme);
 </script>
 
 

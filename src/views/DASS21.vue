@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, ref, type Ref } from 'vue';
 import { NRadioGroup, NRadio, NSpace, NForm, NFormItem } from 'naive-ui';
+
+const currentTheme = inject<Ref<any, any>>('currentTheme');
 
 onMounted(() => document.title = 'DASS-21 - 抑郁-焦虑-压力量表');
 
@@ -166,7 +168,7 @@ const showScore = computed(() => selecters.value.every(selector => selector.val 
     </NForm>
 
     <p style="color: red;" v-show="!showScore"><strong>存在未选项</strong></p>
-    <p v-show="showScore">
+    <!-- <p v-show="showScore">
         <strong>
             总分: {{ scoreD }} 抑郁 | {{ scoreA }} 焦虑 | {{ scoreS }} 压力
         </strong>
@@ -176,5 +178,75 @@ const showScore = computed(() => selecters.value.every(selector => selector.val 
             判定: {{ scoreD <= 9 ? '正常' : scoreD <= 13 ? '轻度' : scoreD <= 20 ? '中度' : scoreD <= 27 ? '重度' : '极重' }} 抑郁 | {{
                 scoreA <= 7 ? '正常' : scoreA <= 9 ? '轻度' : scoreA <= 14 ? '中度' : scoreA <= 19 ? '重度' : '极重' }} 焦虑 | {{ scoreS
                     <= 14 ? '正常' : scoreS <= 18 ? '轻度' : scoreS <= 25 ? '中度' : scoreS <= 33 ? '重度' : '极重' }} 压力 </strong>
-    </p>
+    </p> -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>情绪状态</th>
+                <th>正常</th>
+                <th>轻度</th>
+                <th>中度</th>
+                <th>重度</th>
+                <th>极重</th>
+                <th>分数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>抑郁</td>
+                <td :class="scoreD && scoreD <= 9 ? 'highlight' : ''">0-9</td>
+                <td :class="scoreD >= 10 && scoreD <= 13 ? 'highlight' : ''">10-13</td>
+                <td :class="scoreD >= 14 && scoreD <= 20 ? 'highlight' : ''">14-20</td>
+                <td :class="scoreD >= 21 && scoreD <= 27 ? 'highlight' : ''">21-27</td>
+                <td :class="scoreD >= 28 ? 'highlight' : ''">≥28</td>
+                <td>{{ scoreD }}</td>
+            </tr>
+            <tr>
+                <td>焦虑</td>
+                <td :class="scoreA && scoreA <= 7 ? 'highlight' : ''">0-7</td>
+                <td :class="scoreA == 8 || scoreA == 9 ? 'highlight' : ''">8-9</td>
+                <td :class="scoreA >= 10 && scoreA <= 14 ? 'highlight' : ''">10-14</td>
+                <td :class="scoreA >= 15 && scoreA <= 19 ? 'highlight' : ''">15-19</td>
+                <td :class="scoreA >= 20 ? 'highlight' : ''">≥20</td>
+                <td>{{ scoreA }}</td>
+            </tr>
+            <tr>
+                <td>压力</td>
+                <td :class="scoreS && scoreS <= 14 ? 'highlight' : ''">0-14</td>
+                <td :class="scoreS >= 15 && scoreS <= 18 ? 'highlight' : ''">15-18</td>
+                <td :class="scoreS >= 19 && scoreS <= 25 ? 'highlight' : ''">19-25</td>
+                <td :class="scoreS >= 26 && scoreS <= 33 ? 'highlight' : ''">26-33</td>
+                <td :class="scoreS >= 34 ? 'highlight' : ''">≥34</td>
+                <td>{{ scoreS }}</td>
+            </tr>
+        </tbody>
+    </table>
 </template>
+
+<style scoped>
+table {
+    border-collapse: collapse;
+    margin: 1rem auto 2rem auto;
+    text-align: center;
+}
+
+th {
+    background-color: v-bind('currentTheme.common.codeColor');
+}
+
+th,
+td {
+    border: 1px solid lightgray;
+    padding: 8px;
+}
+
+td:first-child {
+    background-color: v-bind('currentTheme.common.codeColor');
+    font-weight: bold;
+}
+
+td.highlight {
+    background-color: v-bind('currentTheme.common.errorColorHover');
+}
+</style>
