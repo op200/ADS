@@ -125,7 +125,7 @@ const scoreD = computed(
             return acc + selector.val;
         }
         return acc;
-    }, 0)
+    }, 0) * 2
 )
 
 const scoreA = computed(
@@ -134,7 +134,7 @@ const scoreA = computed(
             return acc + selector.val;
         }
         return acc;
-    }, 0)
+    }, 0) * 2
 )
 
 const scoreS = computed(
@@ -143,7 +143,7 @@ const scoreS = computed(
             return acc + selector.val;
         }
         return acc;
-    }, 0)
+    }, 0) * 2
 )
 
 const showScore = computed(() => selecters.value.every(selector => selector.val !== null))
