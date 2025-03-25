@@ -82,7 +82,7 @@ const menuOptions: MenuOption[] = [
       </n-layout-sider>
 
       <!-- 右侧编辑区 -->
-      <n-layout style="width: 100%;height: 100%;text-align: center;padding: 2rem;">
+      <n-layout style="width: 100%;height: 100%;text-align: center;">
         <RouterView />
       </n-layout>
 
